@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Business Card — Flexbox</title>
+  <style>
+    :root{
+      --bg: #0f172a;
+      --card: #111827;
+      --muted: #94a3b8;
+      --text: #e5e7eb;
+      --accent: #2a3283;
+      --accent-2: #1e235e;
+      --ring: rgba(42,50,131,.45);
+    }
+
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      background: radial-gradient(1200px 800px at 10% 10%, #0b1226 0%, var(--bg) 60%);
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      line-height: 1.4;
+    }
+
+    .card {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      background: linear-gradient(145deg, rgba(255,255,255,0.03), rgba(255,255,255,0.00));
+      border: 1px solid rgba(148,163,184,.15);
+      box-shadow: 0 20px 50px rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.02);
+      backdrop-filter: blur(6px);
+      border-radius: 20px;
+      padding: 1.75rem;
+      max-width: 980px;
+      width: min(92vw, 980px);
+    }
+
+    .identity {
+      display: flex;
+      flex-direction: column;
+      gap: .35rem;
+      min-width: 260px;
+      flex: 1 1 320px;
+    }
+    .name {
+      font-size: clamp(1.6rem, 2.4vw + .4rem, 2.4rem);
+      font-weight: 800;
+      letter-spacing: .2px;
+    }
+    .title-company {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem .75rem;
+      align-items: baseline;
+      color: var(--muted);
+    }
+    .title::after{ content: "·"; margin: 0 .5rem; opacity: .5; }
+
+    .contact {
+      display: flex;
+      flex: 1 1 360px;
+      gap: 1rem;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      justify-content: flex-end;
+    }
+
+    .block {
+      display: flex;
+      flex-direction: column;
+      gap: .35rem;
+      min-width: 220px;
+      flex: 1 1 240px;
+      background: rgba(2,6,23,.35);
+      border: 1px solid rgba(148,163,184,.14);
+      border-radius: 14px;
+      padding: .9rem 1rem;
+    }
+
+    .block h3{
+      margin: 0 0 .25rem 0;
+      font-size: .9rem;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    a{ color: var(--text); text-decoration: none; }
+    a:hover{ color: white; }
+
+    .mono { font-variant-numeric: tabular-nums; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+    .muted { color: var(--muted); }
+
+    .row { display: flex; align-items: center; gap: .6rem; }
+    .chip {
+      display: inline-flex; align-items: center; gap: .4rem;
+      font-size: .92rem; padding: .35rem .6rem; border-radius: 999px;
+      background: rgba(42,50,131,.15); border: 1px solid rgba(42,50,131,.4);
+    }
+
+    .avatar {
+      width: 56px; height: 56px; border-radius: 50%;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(42,50,131,.25);
+    }
+    .avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+    .header {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      margin-bottom: .25rem;
+    }
+
+    .footer {
+      margin-top: 1rem;
+      display: flex; flex-wrap: wrap; gap: .6rem 1rem; align-items: center;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: .95rem;
+    }
+
+    .socials { display: flex; flex-wrap: wrap; gap: .5rem; }
+
+    .socials a {
+      display: inline-flex; align-items: center; gap: .45rem;
+      padding: .4rem .6rem; border-radius: 10px;
+      border: 1px solid var(--accent);
+      background: var(--accent);
+      color: #fff;
+      font-weight: 600;
+      transition: background .25s, color .25s;
+    }
+
+    .socials a:hover {
+      background: #fff;
+      color: var(--accent);
+    }
+
+    .socials svg { width: 16px; height: 16px; }
+
+    .card a:focus-visible {
+      outline: 3px solid var(--ring);
+      outline-offset: 2px;
+      border-radius: 8px;
+    }
+
+    .save-btn {
+      display: inline-block;
+      margin-top: 1.2rem;
+      padding: .6rem 1.2rem;
+      border-radius: 8px;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: background .25s;
+    }
+    .save-btn:hover { background: var(--accent-2); }
+
+    @media print {
+      body { background: white; }
+      .card { box-shadow: none; border: 1px solid #ddd; width: 100%; max-width: 900px; }
+      .save-btn { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="card" role="region" aria-label="Business Card">
+    <section class="identity">
+      <div class="header">
+        <div class="avatar"><img src="images/DSC_9935_1.jpg" alt="Ernesto Newberry"></div>
+        <div>
+          <div class="name">Ernesto Newberry</div>
+          <div class="title-company">
+            <span class="title">Sr. Manager, Procurement</span>
+            <span class="company">Valcor Engineering Corporation</span>
+          </div>
+        </div>
+      </div>
+
+      <p class="muted">Building strong supplier relationships and driving procurement excellence.</p>
+
+      <div class="footer">
+        <span class="chip mono">valcor.com</span>
+        <div class="socials" aria-label="Social links">
+          <a href="https://www.linkedin.com/in/ernesto-millan" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8.5h4V24h-4V8.5zM8.5 8.5h3.83v2.11h.05c.53-.98 1.82-2.01 3.75-2.01 4.01 0 4.75 2.64 4.75 6.07V24h-4v-6.9c0-1.64-.03-3.75-2.29-3.75-2.3 0-2.65 1.79-2.65 3.63V24h-4V8.5z"/></svg> LinkedIn</a>
+          <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2H21.5l-7.5 8.57L23.5 22h-6.59l-5.16-6.21L5.77 22H2.5l8.03-9.17L1.5 2h6.75l4.66 5.59L18.24 2Zm-1.16 18h1.8L7.01 4h-1.9l12 16Z"/></svg> X</a>
+          <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.52 2.87 8.35 6.84 9.7.5.1.68-.22.68-.49 0-.24-.01-.87-.01-1.7-2.78.62-3.37-1.37-3.37-1.37-.46-1.2-1.12-1.53-1.12-1.53-.92-.64.07-.63.07-.63 1.02.07 1.55 1.07 1.55 1.07.9 1.57 2.37 1.12 2.95.85.09-.67.35-1.12.63-1.38-2.22-.26-4.56-1.14-4.56-5.06 0-1.12.39-2.04 1.02-2.76-.1-.26-.45-1.31.1-2.72 0 0 .85-.28 2.8 1.05.81-.23 1.67-.35 2.53-.35s1.72.12 2.53.35c1.94-1.33 2.79-1.05 2.79-1.05.55 1.41.2 2.46.1 2.72.64.72 1.02 1.64 1.02 2.76 0 3.93-2.34 4.79-4.57 5.05.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.8 0 .27.18.6.68.49A10.04 10.04 0 0 0 22 12.26C22 6.58 17.52 2 12 2Z" clip-rule="evenodd"/></svg> GitHub</a>
+        </div>
+      </div>
+      <button class="save-btn" onclick="downloadVCard()">Save to Contacts</button>
+    </section>
+
+    <section class="contact" aria-label="Contact Details">
+      <div class="block" aria-label="Address">
+        <h3>Address</h3>
+        <div>2 Lawrance Rd</div>
+        <div>Springfield, NJ 07081</div>
+        <div class="muted">United States</div>
+      </div>
+
+      <div class="block" aria-label="Email & Web">
+        <h3>Email & Web</h3>
+        <div class="row"><span class="mono">ErnestoNewberry@valcor.com</span></div>
+        <div class="row"><a class="mono" href="#">https://valcor.com</a></div>
+      </div>
+
+      <div class="block" aria-label="Phone">
+        <h3>Phone</h3>
+        <div class="row"><span>Desk:</span><a class="mono" href="tel:+19734678400,7565">(973) 467-8400 ext. 7565</a></div>
+        <div class="row"><span>Direct:</span><a class="mono" href="tel:+19735440134">(973) 544-0134</a></div>
+        <div class="row"><span>Mobile:</span><a class="mono" href="tel:+19086619552">(908) 661-9552</a></div>
+      </div>
+    </section>
+  </main>
+  <script>
+    async function downloadVCard(){
+      // Convert the profile photo to Base64 for embedding in the vCard
+      const toBase64 = (blob) => new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result.split(',')[1]);
+        reader.onerror = reject;
+        reader.readAsDataURL(blob);
+      });
+      let photoB64 = '';
+      try {
+        const resp = await fetch('images/DSC_9935_1.jpg', { cache: 'no-store' });
+        const blob = await resp.blob();
+        photoB64 = await toBase64(blob);
+      } catch (e) {
+        photoB64 = '';
+      }
+
+      const CRLF = '\r\n';
+      const lines = [
+        'BEGIN:VCARD',
+        'VERSION:3.0',
+        'N:Newberry;Ernesto;;;',
+        'FN:Ernesto Newberry',
+        'ORG:Valcor Engineering Corporation',
+        'TITLE:Sr. Manager, Procurement',
+        'EMAIL;TYPE=INTERNET,WORK:ErnestoNewberry@valcor.com',
+        'TEL;TYPE=WORK,VOICE:+1-973-467-8400',
+        'TEL;TYPE=WORK,VOICE:+1-973-544-0134',
+        'TEL;TYPE=CELL,VOICE:+1-908-661-9552',
+        'ADR;TYPE=WORK:;;2 Lawrance Rd;Springfield;NJ;07081;USA',
+        'URL:https://valcor.com',
+        'URL;TYPE=LinkedIn:https://www.linkedin.com/in/ernesto-millan',
+        'NOTE:Desk phone has extension 7565'
+      ];
+
+      if (photoB64) {
+        lines.push('PHOTO;ENCODING=b;TYPE=JPEG:' + photoB64);
+      }
+
+      lines.push('END:VCARD');
+
+      const blob = new Blob([lines.join(CRLF) + CRLF], { type: 'text/vcard;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'Ernesto_Newberry.vcf';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+  </script>
+</body>
+</html>
