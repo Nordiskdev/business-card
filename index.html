@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Business Card — Flexbox</title>
+  <style>
+    :root{
+      --bg: #0f172a;
+      --card: #111827;
+      --muted: #94a3b8;
+      --text: #e5e7eb;
+      --accent: #2a3283; /* brand color */
+      --accent-2: #1e235e;
+      --ring: rgba(42,50,131,.45);
+    }
+
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      background: radial-gradient(1200px 800px at 10% 10%, #0b1226 0%, var(--bg) 60%);
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      line-height: 1.4;
+    }
+
+    .card {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      background: linear-gradient(145deg, rgba(255,255,255,0.03), rgba(255,255,255,0.00));
+      border: 1px solid rgba(148,163,184,.15);
+      box-shadow: 0 20px 50px rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.02);
+      backdrop-filter: blur(6px);
+      border-radius: 20px;
+      padding: 1.75rem;
+      max-width: 980px;
+      width: min(92vw, 980px);
+    }
+
+    .identity { display: flex; flex-direction: column; gap: .35rem; min-width: 260px; flex: 1 1 320px; }
+    .name { font-size: clamp(1.6rem, 2.4vw + .4rem, 2.4rem); font-weight: 800; letter-spacing: .2px; }
+    .title-company { display: flex; flex-wrap: wrap; gap: .5rem .75rem; align-items: baseline; color: var(--muted); }
+    .title::after{ content: "·"; margin: 0 .5rem; opacity: .5; }
+
+    .contact { display: flex; flex: 1 1 360px; gap: 1rem; flex-wrap: wrap; align-items: flex-start; justify-content: flex-end; }
+    .block { display: flex; flex-direction: column; gap: .35rem; min-width: 220px; flex: 1 1 240px; background: rgba(2,6,23,.35); border: 1px solid rgba(148,163,184,.14); border-radius: 14px; padding: .9rem 1rem; }
+    .block h3{ margin: 0 0 .25rem 0; font-size: .9rem; letter-spacing: .5px; text-transform: uppercase; color: var(--accent); }
+
+    a{ color: var(--text); text-decoration: none; } a:hover{ color: white; }
+    .mono { font-variant-numeric: tabular-nums; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; }
+    .muted { color: var(--muted); }
+    .row { display: flex; align-items: center; gap: .6rem; }
+    .chip { display: inline-flex; align-items: center; gap: .4rem; font-size: .92rem; padding: .35rem .6rem; border-radius: 999px; background: rgba(42,50,131,.15); border: 1px solid rgba(42,50,131,.4); }
+
+    .avatar { width: 56px; height: 56px; border-radius: 50%; /* overflow: hidden removed */ box-shadow: 0 8px 20px rgba(42,50,131,.25); }
+    .avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block; }
+
+    .header { display: flex; gap: 1rem; align-items: center; margin-bottom: .25rem; }
+    .footer { margin-top: 1rem; display: flex; flex-wrap: wrap; gap: .6rem 1rem; align-items: center; justify-content: space-between; color: var(--muted); font-size: .95rem; }
+
+    .socials { display: flex; flex-wrap: wrap; gap: .5rem; }
+    .socials a { display: inline-flex; align-items: center; gap: .45rem; padding: .4rem .6rem; border-radius: 10px; border: 1px solid var(--accent); background: var(--accent); color: #fff; font-weight: 600; transition: background .25s, color .25s; }
+    .socials a:hover { background: #fff; color: var(--accent); }
+    .socials svg { width: 16px; height: 16px; }
+    .card a:focus-visible { outline: 3px solid var(--ring); outline-offset: 2px; border-radius: 8px; }
+
+    .save-btn { display: inline-block; margin-top: 1.2rem; padding: .6rem 1.2rem; border-radius: 8px; background: var(--accent); color: #fff; font-weight: 600; border: none; cursor: pointer; transition: background .25s; }
+    .save-btn + .save-btn { margin-left: .6rem; }
+    .save-btn:hover { background: var(--accent-2); }
+
+    @media print { body { background: white; } .card { box-shadow: none; border: 1px solid #ddd; width: 100%; max-width: 900px; } .save-btn { display: none; } }
+
+    /* Small-screen fix */
+    @media (max-width: 640px) {
+      html, body { min-height: 100svh; min-height: 100dvh; }
+      body { justify-content: flex-start; align-items: stretch; overflow-y: auto; padding-top: max(16px, env(safe-area-inset-top)); padding-right: 16px; padding-bottom: 16px; padding-left: 16px; }
+      .card { width: 100%; max-width: 680px; margin: 0 auto; }
+    }
+  </style>
+</head>
+<body>
+  <main class="card" role="region" aria-label="Business Card">
+    <section class="identity">
+      <div class="header">
+        <div class="avatar"><img src="images/DSC_9935_1.jpg" alt="Ernesto Newberry"></div>
+        <div>
+          <div class="name">Ernesto Newberry</div>
+          <div class="title-company">
+            <span class="title">Sr. Manager, Procurement</span>
+            <span class="company">Valcor Engineering Corporation</span>
+          </div>
+        </div>
+      </div>
+      <p class="muted">Building strong supplier relationships and driving procurement excellence.</p>
+      <div class="footer">
+        <span class="chip mono">valcor.com</span>
+        <div class="socials" aria-label="Social links">
+          <a href="https://www.linkedin.com/in/ernesto-millan" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+      </div>
+      <button class="save-btn" onclick="downloadVCard()">Save to Contacts</button>
+      <button class="save-btn" onclick="window.print()">Save/Print PDF</button>
+    </section>
+
+    <section class="contact" aria-label="Contact Details">
+      <div class="block" aria-label="Address">
+        <h3>Address</h3>
+        <div>2 Lawrance Rd</div>
+        <div>Springfield, NJ 07081</div>
+        <div class="muted">United States</div>
+      </div>
+
+      <div class="block" aria-label="Email & Web">
+        <h3>Email & Web</h3>
+        <div class="row"><span class="mono">ErnestoNewberry@valcor.com</span></div>
+        <div class="row"><a class="mono" href="#">https://valcor.com</a></div>
+      </div>
+
+      <div class="block" aria-label="Phone">
+        <h3>Phone</h3>
+        <div class="row"><span>Desk:</span><a class="mono" href="tel:+19734678400,7565">(973) 467-8400 ext. 7565</a></div>
+        <div class="row"><span>Direct:</span><a class="mono" href="tel:+19735440134">(973) 544-0134</a></div>
+        <div class="row"><span>Mobile:</span><a class="mono" href="tel:+19086619552">(908) 661-9552</a></div>
+      </div>
+    </section>
+  </main>
+  <script>
+    function buildVCard(photoB64) {
+      const CRLF = '\r\n';
+      const lines = [
+        'BEGIN:VCARD','VERSION:3.0','N:Newberry;Ernesto;;;','FN:Ernesto Newberry',
+        'ORG:Valcor Engineering Corporation','TITLE:Sr. Manager, Procurement',
+        'EMAIL;TYPE=INTERNET,WORK:ErnestoNewberry@valcor.com',
+        'TEL;TYPE=WORK,VOICE:+1-973-467-8400','TEL;TYPE=WORK,VOICE:+1-973-544-0134',
+        'TEL;TYPE=CELL,VOICE:+1-908-661-9552','ADR;TYPE=WORK:;;2 Lawrance Rd;Springfield;NJ;07081;USA',
+        'URL:https://valcor.com','URL;TYPE=LinkedIn:https://www.linkedin.com/in/ernesto-millan','NOTE:Desk phone has extension 7565'
+      ];
+      if (photoB64) lines.push('PHOTO;ENCODING=b;TYPE=JPEG:' + photoB64);
+      lines.push('END:VCARD');
+      return lines.join(CRLF) + CRLF;
+    }
+    async function downloadVCard(){
+      const toBase64 = (blob) => new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result.split(',')[1]);
+        reader.onerror = reject;
+        reader.readAsDataURL(blob);
+      });
+      let photoB64 = '';
+      try {
+        const resp = await fetch('images/DSC_9935_1.jpg', { cache: 'no-store' });
+        const blob = await resp.blob();
+        photoB64 = await toBase64(blob);
+      } catch (e) { photoB64 = ''; }
+      const vcf = buildVCard(photoB64);
+      const blob = new Blob([vcf], { type: 'text/vcard;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'Ernesto_Newberry.vcf';
+      document.body.appendChild(a); a.click(); a.remove();
+      URL.revokeObjectURL(url);
+    }
+  </script>
+</body>
+</html>
